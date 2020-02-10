@@ -63,12 +63,18 @@ def to_usd(my_price):
 
 subtotal_price = 0
 selected_ids = []
+all_ids = [str(products["id"]) for products in products]
+print (all_ids)
+#https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/lists.md
 products_length = len(products)
 
 while True:
     selected_id = input("Please input a product ID, type 'DONE' if you are finished inputting products: ")
-    if selected_id.upper == "DONE":
+    id_in = selected_id in all_ids
+    if selected_id.upper() == "DONE":
         break
+    elif id_in == False:
+        print("Error: the ID you typed in is not in the list of products.")
     else:
         selected_ids.append(selected_id)
 
