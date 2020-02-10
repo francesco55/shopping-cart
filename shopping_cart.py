@@ -2,6 +2,8 @@
 
 #from pprint import pprint
 
+import datetime
+
 products = [
     {"id":1, "name": "Chocolate Sandwich Cookies", "department": "snacks", "aisle": "cookies cakes", "price": 3.50},
     {"id":2, "name": "All-Seasons Salt", "department": "pantry", "aisle": "spices seasonings", "price": 4.99},
@@ -83,7 +85,10 @@ print("---------------------------------")
 print("GREEN FOODS GROCERY")
 print("WWW.GREEN-FOODS-GROCERY.COM")
 print("---------------------------------")
-print("CHECKOUT AT: " ) #TODO add time
+date = datetime.date.today()
+time = datetime.datetime.now()
+
+print("CHECKOUT AT: ", date, time.strftime("%H:%M %p")) #https://stackabuse.com/how-to-format-dates-in-python/
 print("---------------------------------")
 print("Selected Products: ")
 
