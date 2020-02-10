@@ -11,6 +11,7 @@ from oauth2client.service_account import ServiceAccountCredentials #> loads cont
 
 load_dotenv()
 
+#code for reading from google sheets is from the following link
 #https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/packages/gspread.md
 DOCUMENT_ID = os.environ.get("GOOGLE_SHEET_ID", "OOPS")
 SHEET_NAME = os.environ.get("SHEET_NAME", "Products")
@@ -36,9 +37,9 @@ client = gspread.authorize(credentials) #> <class 'gspread.client.Client'>
 
 doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
 
-#print("-----------------")
+print("-----------------")
 print("SPREADSHEET:", doc.title)
-#print("-----------------")
+print("-----------------")
 #
 sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
 #
@@ -122,13 +123,13 @@ while True:
 
 
 print("---------------------------------")
-print("GREEN FOODS GROCERY")
-print("WWW.GREEN-FOODS-GROCERY.COM")
+print("Francesco's Market")
+print("WWW.Cesco-Market.COM")
 print("---------------------------------")
 date = datetime.date.today()
 time = datetime.datetime.now()
 
-print("CHECKOUT AT: ", date, time.strftime("%H:%M %p")) #https://stackabuse.com/how-to-format-dates-in-python/
+print("CHECKOUT AT: ", date, time.strftime("%I:%M %p")) #https://stackabuse.com/how-to-format-dates-in-python/
 print("---------------------------------")
 print("Selected Products: ")
 
