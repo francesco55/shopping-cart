@@ -3,6 +3,11 @@
 #from pprint import pprint
 
 import datetime
+import os
+from dotenv import load_dotenv #https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/packages/dotenv.md
+my_env = os.environ
+load_dotenv() #> loads contents of the .env file into the script's environment
+
 
 products = [
     {"id":1, "name": "Chocolate Sandwich Cookies", "department": "snacks", "aisle": "cookies cakes", "price": 3.50},
@@ -66,7 +71,7 @@ def to_usd(my_price):
 subtotal_price = 0
 selected_ids = []
 all_ids = [str(products["id"]) for products in products]
-print (all_ids)
+#print (all_ids)
 #https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/lists.md
 products_length = len(products)
 
@@ -92,6 +97,7 @@ print("CHECKOUT AT: ", date, time.strftime("%H:%M %p")) #https://stackabuse.com/
 print("---------------------------------")
 print("Selected Products: ")
 
+#following for loop: https://www.youtube.com/watch?v=3BaGb-1cIr0&feature=youtu.be
 for selected_id in selected_ids:
     matching_products = [p for p in products if str(p["id"]) == str(selected_id)]
     matching_product= matching_products[0]
@@ -100,9 +106,10 @@ for selected_id in selected_ids:
 
 print("---------------------------------")
 print("SUBTOTAL: " + to_usd(subtotal_price))
-tax_rate = .0875
+tax_rate = float(os.getenv("tax_rate", default = ".0875"))
 nominal_tax = tax_rate * subtotal_price
 total_price = subtotal_price + nominal_tax
+print(str(tax_rate))
 print("TAX: " + to_usd(nominal_tax))
 print("TOTAL: " + to_usd(total_price))
 print("---------------------------------")
