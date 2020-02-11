@@ -6,9 +6,9 @@ The purpose of the given code is to act as a sort of register which produces a r
 
 To install all necessary documents: fork this repository, clone your fork and download it onto your computer. Navigate to the files from the command-line with the given code.
 
-'''sh
+```sh
 cd ~/Documents/GitHub/shopping-cart
-'''
+```
 
 ## Set Up
 
@@ -18,10 +18,10 @@ In order for the code to run correctly, the environment in which the code runs i
 
 First, set up a conda environment:
 
-'''sh
+```sh
 conda create -n shopping-env python=3.7 # (first time only)
 conda activate shopping-env
-'''
+```
 
 ### .env File Installation
 
@@ -31,26 +31,26 @@ This .env file will allow you to set up environment variables and will be necess
 
 Use the following command-line arguments
 
-'''sh
+```sh
 pip install python-dotenv
-'''
+```
 
 ### Gspread Package
 
 Third, install the gspread package which allows you to access a product inventory in google sheets:
 
-'''sh
+```sh
 pip install gspread oauth2client
-'''
+```
 ### .env File Contents
 
 Lastly, place the following contents inside the .env file:
 
-'''sh
+```sh
 tax_rate = "" #place tax rate in decimals within the quotes
 GOOGLE_SHEET_ID = "1ItN7Cc2Yn4K90cMIsxi2P045Gzw0y2JHB_EkV4mXXpI"
 SHEET_NAME = "products-custom"
-'''
+```
 
 ## Usage
 
@@ -58,6 +58,6 @@ The code should be ready to run!
 
 Use the following code in terminal:
 
-'''sh
+```sh
 python shopping_cart.py
-'''
+```
