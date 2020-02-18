@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#google credentials
+
+auth/spreadsheet_credentials.json
