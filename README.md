@@ -42,13 +42,16 @@ Third, install the gspread package which allows you to access a product inventor
 ```sh
 pip install gspread oauth2client
 ```
+
+You may have to create an account in order to get gspread API key, follow the following readme: https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/packages/gspread.md
+
 ### .env File Contents
 
 Lastly, place the following contents inside the .env file:
 
 ```sh
 tax_rate = "" #place tax rate in decimals within the quotes
-GOOGLE_SHEET_ID = "1ItN7Cc2Yn4K90cMIsxi2P045Gzw0y2JHB_EkV4mXXpI"
+GOOGLE_SHEET_ID = #insert your given API key here
 SHEET_NAME = "products-custom"
 ```
 
