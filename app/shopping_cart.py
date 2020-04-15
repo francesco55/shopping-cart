@@ -20,7 +20,7 @@ SHEET_NAME = os.environ.get("SHEET_NAME", "Products")
 # AUTHORIZATION
 #
 
-CREDENTIALS_FILEPATH = os.path.join(os.path.dirname(__file__), "auth","spreadsheet_credentials.json")
+CREDENTIALS_FILEPATH = os.path.join(os.path.dirname(__file__), "..", "auth","spreadsheet_credentials.json")
 
 AUTH_SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets", #> Allows read/write access to the user's sheets and their properties.
@@ -69,14 +69,19 @@ products_og = [
 ] # based on data from Instacart: https://www.instacart.com/datasets/grocery-shopping-2017
 
 def to_usd(my_price):
-    """
-    Converts a numeric value to usd-formatted string, for printing and display purposes.
-    Source: https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/numbers.md#formatting-as-currency
-    Param: my_price (int or float) like 4000.444444
-    Example: to_usd(4000.444444)
-    Returns: $4,000.44
-    """
+    #Converts a numeric value to usd-formatted string, for printing and display purposes.
+    #Source: https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/numbers.md#formatting-as-currency
+    #Param: my_price (int or float) like 4000.444444
+    #Example: to_usd(4000.444444)
+    #Returns: $4,000.44
+
     return f"${my_price:,.2f}"
+
+#def find_product()
+
+def timestamp(time):
+    #
+    return time.strftime("%I:%M %p")
 
 #print(products)
 # pprint(products)
@@ -127,9 +132,24 @@ print("Francesco's Market")
 print("WWW.Cesco-Market.COM")
 print("---------------------------------")
 date = datetime.date.today()
-time = datetime.datetime.now()
+#time = datetime.datetime.now()
+time = datetime.datetime(2020,4,20,21,30,12)
+print("________")
+print(time)
+print(type(time))
+print("__________")
+print(timestamp(time))
+if (timestamp(time)) == "09:30 PM":
+    print("_______")
+    print("True")
+    print("________")
+else:
+    print("_______")
+    print("no")
+    print("________")
 
-print("CHECKOUT AT: ", date, time.strftime("%I:%M %p")) #https://stackabuse.com/how-to-format-dates-in-python/
+print(f"CHECKOUT AT: ", date, timestamp(time)) #https://stackabuse.com/how-to-format-dates-in-python/
+# print(f"CHECKOUT AT: ", date, time.strftime("%I:%M %p")) #https://stackabuse.com/how-to-format-dates-in-python/
 print("---------------------------------")
 print("Selected Products: ")
 
