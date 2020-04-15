@@ -6,48 +6,10 @@ import datetime
 import os
 from dotenv import load_dotenv #https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/packages/dotenv.md
 
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials #> loads contents of the .env file into the script's environment
-
-
 
 load_dotenv()
 
-#code for reading from google sheets is from the following link
-#https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/packages/gspread.md
-DOCUMENT_ID = os.environ.get("GOOGLE_SHEET_ID", "OOPS")
-SHEET_NAME = os.environ.get("SHEET_NAME", "Products")
-
-#
-# AUTHORIZATION
-#
-
-CREDENTIALS_FILEPATH = os.path.join(os.path.dirname(__file__), "..", "auth","spreadsheet_credentials.json")
-
-AUTH_SCOPE = [
-    "https://www.googleapis.com/auth/spreadsheets", #> Allows read/write access to the user's sheets and their properties.
-    "https://www.googleapis.com/auth/drive.file" #> Per-file access to files created or opened by the app.
-]
-
-credentials = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILEPATH, AUTH_SCOPE)
-
-#
-# READ SHEET VALUES
-#
-
-client = gspread.authorize(credentials) #> <class 'gspread.client.Client'>
-
-doc = client.open_by_key(DOCUMENT_ID) #> <class 'gspread.models.Spreadsheet'>
-
-print("-----------------")
-print("SPREADSHEET:", doc.title)
-print("-----------------")
-#
-sheet = doc.worksheet(SHEET_NAME) #> <class 'gspread.models.Worksheet'>
-#
-products = sheet.get_all_records() #> <class 'list'>
-
-products_og = [
+products = [
     {"id":1, "name": "Chocolate Sandwich Cookies", "department": "snacks", "aisle": "cookies cakes", "price": 3.50},
     {"id":2, "name": "All-Seasons Salt", "department": "pantry", "aisle": "spices seasonings", "price": 4.99},
     {"id":3, "name": "Robust Golden Unsweetened Oolong Tea", "department": "beverages", "aisle": "tea", "price": 2.49},
