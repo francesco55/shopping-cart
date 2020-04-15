@@ -9,6 +9,8 @@ from dotenv import load_dotenv #https://github.com/prof-rossetti/intro-to-python
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials #> loads contents of the .env file into the script's environment
 
+
+
 load_dotenv()
 
 #code for reading from google sheets is from the following link
@@ -20,7 +22,7 @@ SHEET_NAME = os.environ.get("SHEET_NAME", "Products")
 # AUTHORIZATION
 #
 
-CREDENTIALS_FILEPATH = os.path.join(os.path.dirname(__file__), "auth","spreadsheet_credentials.json")
+CREDENTIALS_FILEPATH = os.path.join(os.path.dirname(__file__), "..", "auth","spreadsheet_credentials.json")
 
 AUTH_SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets", #> Allows read/write access to the user's sheets and their properties.
@@ -69,14 +71,19 @@ products_og = [
 ] # based on data from Instacart: https://www.instacart.com/datasets/grocery-shopping-2017
 
 def to_usd(my_price):
-    """
-    Converts a numeric value to usd-formatted string, for printing and display purposes.
-    Source: https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/numbers.md#formatting-as-currency
-    Param: my_price (int or float) like 4000.444444
-    Example: to_usd(4000.444444)
-    Returns: $4,000.44
-    """
+    #Converts a numeric value to usd-formatted string, for printing and display purposes.
+    #Source: https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/numbers.md#formatting-as-currency
+    #Param: my_price (int or float) like 4000.444444
+    #Example: to_usd(4000.444444)
+    #Returns: $4,000.44
+
     return f"${my_price:,.2f}"
+
+#def find_product()
+
+def timestamp(time):
+    #
+    return time.strftime("%I:%M %p")
 
 #print(products)
 # pprint(products)
@@ -111,45 +118,62 @@ all_ids = [str(products["id"]) for products in products]
 #https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/lists.md
 products_length = len(products)
 
-while True:
-    selected_id = input("Please input a product ID, type 'DONE' if you are finished inputting products: ")
-    id_in = selected_id in all_ids
-    if selected_id.upper() == "DONE":
-        break
-    elif id_in == False:
-        print("Error: the ID you typed in is not in the list of products.")
+if __name__ == "__main__":
+
+    while True:
+        selected_id = input("Please input a product ID, type 'DONE' if you are finished inputting products: ")
+        id_in = selected_id in all_ids
+        if selected_id.upper() == "DONE":
+            break
+        elif id_in == False:
+            print("Error: the ID you typed in is not in the list of products.")
+        else:
+            selected_ids.append(selected_id)
+
+
+    print("---------------------------------")
+    print("Francesco's Market")
+    print("WWW.Cesco-Market.COM")
+    print("---------------------------------")
+    date = datetime.date.today()
+    #time = datetime.datetime.now()
+    time = datetime.datetime(2020,4,20,21,30,12)
+    print("________")
+    print(time)
+    print(type(time))
+    print("__________")
+    print(timestamp(time))
+    if (timestamp(time)) == "09:30 PM":
+        print("_______")
+        print("True")
+        print("________")
     else:
-        selected_ids.append(selected_id)
+        print("_______")
+        print("no")
+        print("________")
 
+    print(f"CHECKOUT AT: ", date, timestamp(time)) #https://stackabuse.com/how-to-format-dates-in-python/
+    # print(f"CHECKOUT AT: ", date, time.strftime("%I:%M %p")) #https://stackabuse.com/how-to-format-dates-in-python/
+    print("---------------------------------")
+    print("Selected Products: ")
 
-print("---------------------------------")
-print("Francesco's Market")
-print("WWW.Cesco-Market.COM")
-print("---------------------------------")
-date = datetime.date.today()
-time = datetime.datetime.now()
+    #following for loop: https://www.youtube.com/watch?v=3BaGb-1cIr0&feature=youtu.be
+    for selected_id in selected_ids:
+        matching_products = [p for p in products if str(p["id"]) == str(selected_id)]
+        matching_product= matching_products[0]
+        subtotal_price= subtotal_price + matching_product["price"]
+        print(" ... " + matching_product["name"] + "(" + to_usd(matching_product["price"]) + ")")
 
-print("CHECKOUT AT: ", date, time.strftime("%I:%M %p")) #https://stackabuse.com/how-to-format-dates-in-python/
-print("---------------------------------")
-print("Selected Products: ")
+    print("---------------------------------")
+    print("SUBTOTAL: " + to_usd(subtotal_price))
+    tax_rate = float(os.getenv("tax_rate", default = ".0875")) #https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/modules/os.md
+    nominal_tax = tax_rate * subtotal_price
+    total_price = subtotal_price + nominal_tax
+    #print(str(tax_rate))
+    print("TAX: " + to_usd(nominal_tax))
+    print("TOTAL: " + to_usd(total_price))
+    print("---------------------------------")
+    print("THANKS, SEE YOU AGAIN SOON!")
+    print("---------------------------------")
 
-#following for loop: https://www.youtube.com/watch?v=3BaGb-1cIr0&feature=youtu.be
-for selected_id in selected_ids:
-    matching_products = [p for p in products if str(p["id"]) == str(selected_id)]
-    matching_product= matching_products[0]
-    subtotal_price= subtotal_price + matching_product["price"]
-    print(" ... " + matching_product["name"] + "(" + to_usd(matching_product["price"]) + ")")
-
-print("---------------------------------")
-print("SUBTOTAL: " + to_usd(subtotal_price))
-tax_rate = float(os.getenv("tax_rate", default = ".0875")) #https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/modules/os.md
-nominal_tax = tax_rate * subtotal_price
-total_price = subtotal_price + nominal_tax
-#print(str(tax_rate))
-print("TAX: " + to_usd(nominal_tax))
-print("TOTAL: " + to_usd(total_price))
-print("---------------------------------")
-print("THANKS, SEE YOU AGAIN SOON!")
-print("---------------------------------")
-
-#print("Selected Product: " + matching_product["name"] + ")
+    #print("Selected Product: " + matching_product["name"] + ")
