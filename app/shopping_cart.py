@@ -41,11 +41,17 @@ def to_usd(my_price):
 
     return f"${my_price:,.2f}"
 
-#def find_product()
 
 def timestamp(time):
     #
     return time.strftime("%I:%M %p")
+
+def find_product(selected_id, products):
+    #
+    matching_products = [p for p in products if str(p["id"]) == str(selected_id)]
+    matching_product= matching_products[0]
+    return matching_product
+
 
 #print(products)
 # pprint(products)
@@ -98,21 +104,7 @@ if __name__ == "__main__":
     print("WWW.Cesco-Market.COM")
     print("---------------------------------")
     date = datetime.date.today()
-    #time = datetime.datetime.now()
-    time = datetime.datetime(2020,4,20,21,30,12)
-    print("________")
-    print(time)
-    print(type(time))
-    print("__________")
-    print(timestamp(time))
-    if (timestamp(time)) == "09:30 PM":
-        print("_______")
-        print("True")
-        print("________")
-    else:
-        print("_______")
-        print("no")
-        print("________")
+    time = datetime.datetime.now()
 
     print(f"CHECKOUT AT: ", date, timestamp(time)) #https://stackabuse.com/how-to-format-dates-in-python/
     # print(f"CHECKOUT AT: ", date, time.strftime("%I:%M %p")) #https://stackabuse.com/how-to-format-dates-in-python/
@@ -121,8 +113,7 @@ if __name__ == "__main__":
 
     #following for loop: https://www.youtube.com/watch?v=3BaGb-1cIr0&feature=youtu.be
     for selected_id in selected_ids:
-        matching_products = [p for p in products if str(p["id"]) == str(selected_id)]
-        matching_product= matching_products[0]
+        matching_product = find_product(selected_id, products)
         subtotal_price= subtotal_price + matching_product["price"]
         print(" ... " + matching_product["name"] + "(" + to_usd(matching_product["price"]) + ")")
 
