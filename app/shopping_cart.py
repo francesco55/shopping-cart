@@ -1,11 +1,8 @@
 # shopping_cart.py
 
-#from pprint import pprint
-
 import datetime
 import os
 from dotenv import load_dotenv #https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/packages/dotenv.md
-
 
 load_dotenv()
 
@@ -43,51 +40,25 @@ def to_usd(my_price):
 
 
 def timestamp(time):
-    #
+    # this function takes in an argument variable of datetime type 
+    # returns a user-friendly string such as "09:30 PM"
     return time.strftime("%I:%M %p")
 
 def find_product(selected_id, products):
-    #
+    # this function takes an id number as a string and a list of dictionaries in the format of products as arguments
+    # this 
     matching_products = [p for p in products if str(p["id"]) == str(selected_id)]
     matching_product= matching_products[0]
     return matching_product
 
 
-#print(products)
-# pprint(products)
-
-# given desired output
-#> ---------------------------------
-#> GREEN FOODS GROCERY
-#> WWW.GREEN-FOODS-GROCERY.COM
-#> ---------------------------------
-#> CHECKOUT AT: 2019-06-06 11:31 AM
-#> ---------------------------------
-#> SELECTED PRODUCTS:
-#>  ... Chocolate Sandwich Cookies ($3.50)
-#>  ... Cut Russet Potatoes Steam N' Mash ($4.25)
-#>  ... Dry Nose Oil ($21.99)
-#>  ... Cut Russet Potatoes Steam N' Mash ($4.25)
-#>  ... Cut Russet Potatoes Steam N' Mash ($4.25)
-#>  ... Mint Chocolate Flavored Syrup ($4.50)
-#>  ... Chocolate Fudge Layer Cake ($18.50)
-#> ---------------------------------
-#> SUBTOTAL: $61.24
-#> TAX: $5.35
-#> TOTAL: $66.59
-#> ---------------------------------
-#> THANKS, SEE YOU AGAIN SOON!
-#> ---------------------------------
-
 subtotal_price = 0
 selected_ids = []
-all_ids = [str(products["id"]) for products in products]
-#print (all_ids)
-#https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/lists.md
-products_length = len(products)
+all_ids = [str(products["id"]) for products in products] #https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/lists.md
 
 if __name__ == "__main__":
 
+    # INPUT PRODUCTS
     while True:
         selected_id = input("Please input a product ID, type 'DONE' if you are finished inputting products: ")
         id_in = selected_id in all_ids
@@ -98,18 +69,18 @@ if __name__ == "__main__":
         else:
             selected_ids.append(selected_id)
 
-
+    # GENERATE RECEIPT
     print("---------------------------------")
     print("Francesco's Market")
     print("WWW.Cesco-Market.COM")
     print("---------------------------------")
     date = datetime.date.today()
     time = datetime.datetime.now()
-
     print(f"CHECKOUT AT: ", date, timestamp(time)) #https://stackabuse.com/how-to-format-dates-in-python/
-    # print(f"CHECKOUT AT: ", date, time.strftime("%I:%M %p")) #https://stackabuse.com/how-to-format-dates-in-python/
     print("---------------------------------")
     print("Selected Products: ")
+
+    #OUTPUT ALL PRODUCTS & CALCULATE COST
 
     #following for loop: https://www.youtube.com/watch?v=3BaGb-1cIr0&feature=youtu.be
     for selected_id in selected_ids:
@@ -122,11 +93,8 @@ if __name__ == "__main__":
     tax_rate = float(os.getenv("tax_rate", default = ".0875")) #https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/modules/os.md
     nominal_tax = tax_rate * subtotal_price
     total_price = subtotal_price + nominal_tax
-    #print(str(tax_rate))
     print("TAX: " + to_usd(nominal_tax))
     print("TOTAL: " + to_usd(total_price))
     print("---------------------------------")
     print("THANKS, SEE YOU AGAIN SOON!")
     print("---------------------------------")
-
-    #print("Selected Product: " + matching_product["name"] + ")
