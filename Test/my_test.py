@@ -4,17 +4,22 @@ from app.shopping_cart import to_usd, find_product, timestamp
 
 
 def test_timestamp():
-     # we cannot test datetime with the .now() functin so I test for a specified time
-     # program should output in the format "09:30 PM", rounding seconds and in 12 hour format
+     """ 
+     we cannot test datetime with the .now() functin so I test for a specified time
+     
+     program should output in the format "09:30 PM", rounding seconds and in 12 hour format
+     """
      time = datetime.datetime(2020,4,20,21,30,12)
      result = timestamp(time)
      assert result == "09:30 PM"
     
 def test_to_usd():
-     #tests that to_usd() creates a string from a float that does the following:
-     #         1) converts to two decimals
-     #         2) includes commas for thousands place
-     #         3) includes dollar sign
+     """
+     tests that to_usd() creates a string from a float that does the following:
+              1) converts to two decimals
+              2) includes commas for thousands place
+              3) includes a dollar sign
+     """
      price = 34903.727
      result = to_usd(price)
      assert result == "$34,903.73"

@@ -30,23 +30,34 @@ products = [
 ] # based on data from Instacart: https://www.instacart.com/datasets/grocery-shopping-2017
 
 def to_usd(my_price):
-    #Converts a numeric value to usd-formatted string, for printing and display purposes.
-    #Source: https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/numbers.md#formatting-as-currency
-    #Param: my_price (int or float) like 4000.444444
-    #Example: to_usd(4000.444444)
-    #Returns: $4,000.44
+    """
+    Converts a numeric value to usd-formatted string, for printing and display purposes.
 
+    Source: https://github.com/prof-rossetti/intro-to-python/blob/master/notes/python/datatypes/numbers.md#formatting-as-currency
+    
+    Param: my_price (int or float) like 4000.444444
+    
+    Example: to_usd(4000.444444)
+    
+    Returns: $4,000.44
+    """
     return f"${my_price:,.2f}"
 
 
 def timestamp(time):
-    # this function takes in an argument variable of datetime type 
-    # returns a user-friendly string such as "09:30 PM"
+    """
+    this function takes in an argument variable of datetime type 
+    
+    returns a user-friendly string such as "09:30 PM"
+    """
     return time.strftime("%I:%M %p")
 
 def find_product(selected_id, products):
-    # this function takes an id number as a string and a list of dictionaries in the format of products as arguments
-    # this 
+    """
+    this function takes an id number as a string and a list of dictionaries in the format of "products" as arguments
+    
+    this function returns the id number if it matches the id value of an element of the list
+    """ 
     matching_products = [p for p in products if str(p["id"]) == str(selected_id)]
     matching_product= matching_products[0]
     return matching_product
