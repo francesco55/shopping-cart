@@ -37,6 +37,8 @@ pip install python-dotenv
 
 ### Gspread Package
 
+* This package has issues with the unit testing package, travis, it has been removed in this latest version of the program*
+
 Third, install the gspread package which allows you to access a product inventory in google sheets:
 
 ```sh
